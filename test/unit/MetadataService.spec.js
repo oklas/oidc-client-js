@@ -150,6 +150,29 @@ describe("MetadataService", function() {
             });
         });
 
+        it("should openid-configuration be overridable", function(done) {
+            settings.metadataUrl = "http://sts/metadata";
+            settings.metadata_override = {
+                property2: "overrided",
+            }
+            const response = {
+                property1: "original1",
+                property2: "original2"
+            }
+            const expected =  {
+                property1: "original1",
+                property2: "overrided"
+            }
+            stubJsonService.result = Promise.resolve(response);
+
+            let p = subject.getMetadata();
+
+            p.then(result => {
+                result.should.deep.equal(expected);
+                done();
+            });
+        });
+
     });
 
      describe("_getMetadataProperty", function() {

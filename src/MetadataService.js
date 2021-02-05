@@ -72,7 +72,8 @@ export class MetadataService {
                 // precedence was set on the assumption the issuers hosted configuration is always more accurate
                 // than what the developer seeded the client with.
                 if (!this._settings.metadata) this._settings.metadata = {}
-                Object.assign(this._settings.metadata, metadata);
+                if (!this._settings.metadata_override) this._settings.metadata_override = {}
+                Object.assign(this._settings.metadata, metadata, this._settings.metadata_override);
                 return this._settings.metadata;
             });
 
